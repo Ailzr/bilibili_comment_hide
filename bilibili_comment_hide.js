@@ -1,13 +1,17 @@
 // ==UserScript==
 // @name         Bilibili 评论区隐藏
 // @namespace    https://github.com/Ailzr/bilibili_comment_hide
-// @version      0.1.0
+// @version      0.1.1
 // @description  用于隐藏b站的评论区
 // @author       Ailzr
+// @license      MIT
 // @match        https://www.bilibili.com/video/*
 // @icon         https://www.bilibili.com/favicon.ico
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @grant        GM_addStyle
+// @downloadURL https://update.greasyfork.org/scripts/492917/Bilibili%20%E8%AF%84%E8%AE%BA%E5%8C%BA%E9%9A%90%E8%97%8F.user.js
+// @updateURL https://update.greasyfork.org/scripts/492917/Bilibili%20%E8%AF%84%E8%AE%BA%E5%8C%BA%E9%9A%90%E8%97%8F.meta.js
 // ==/UserScript==
 
 //按钮背景颜色，可自行调节
@@ -17,11 +21,12 @@ const fontColor = "#fff";
 
 //获取评论区
 function getComment(){
-    return document.querySelector("div.comment-container");
+    return document.querySelector("div.comment");
 }
 
 //  显示/隐藏评论区 函数
 function displayOrNotComment(){
+    let comment = getComment();
     //将其隐藏或显示
     if (comment.style.display != "none"){
         comment.style.display = "none";
@@ -30,7 +35,6 @@ function displayOrNotComment(){
         comment.style.display = "block";
     }
 }
-
 
 //创建 显示/隐藏 评论区按钮
 function createButtonDisplayComment(){
@@ -49,6 +53,7 @@ function createButtonDisplayComment(){
     button.style.border = "none";
     button.style.borderRadius = "5px";
     button.style.cursor = "pointer";
+    button.style.zIndex = "99";
 
 
     //给按钮添加监听事件
@@ -61,21 +66,17 @@ function createButtonDisplayComment(){
 
 function CloseCommentOfBilibili(){
     //获取评论区
-    comment = getComment();
+    let getCmt = getComment();
 
     //如果成功获取到评论区元素
-    if (comment){
+    if (getCmt){
         clearInterval(intervalId);
         //默认将评论区隐藏
         displayOrNotComment();
         //创建 显示/隐藏 评论区按钮
         createButtonDisplayComment();
     }
-
-
 }
 
-//评论区变量
-let comment;
 // 每隔0.1秒执行一次tryToGetElement函数
 let intervalId = setInterval(CloseCommentOfBilibili, 100);
