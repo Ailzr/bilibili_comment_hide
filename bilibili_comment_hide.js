@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili 评论区隐藏
 // @namespace    https://github.com/Ailzr/bilibili_comment_hide
-// @version      0.1.1
+// @version      0.1.2
 // @description  用于隐藏b站的评论区
 // @author       Ailzr
 // @license      MIT
@@ -21,7 +21,7 @@ const fontColor = "#fff";
 
 //获取评论区
 function getComment(){
-    return document.querySelector("div.comment");
+    return document.querySelector("div#commentapp");
 }
 
 //  显示/隐藏评论区 函数
@@ -70,6 +70,7 @@ function CloseCommentOfBilibili(){
 
     //如果成功获取到评论区元素
     if (getCmt){
+        //将计时器暂停
         clearInterval(intervalId);
         //默认将评论区隐藏
         displayOrNotComment();
